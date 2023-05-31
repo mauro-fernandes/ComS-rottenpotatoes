@@ -25,12 +25,10 @@ Ref. https://python-poetry.org
 
 ###### `$` Unix Bash (Linux, Mac, etc.): 
     export FLASK_APP=app.webapp  
-
     flask run
  
 ###### `>` Windows PowerShell:
     $env:FLASK_APP = "app.webapp"
-    
     flask run
 
 
@@ -43,9 +41,7 @@ Ref. https://flask-migrate.readthedocs.io/en/latest/
     poetry shell
     
     flask db init
-    
     flask db migrate -m "Initial migration."
-    
     flask db upgrade
 
 
@@ -53,8 +49,8 @@ Ref. https://flask-migrate.readthedocs.io/en/latest/
 
     export FLASK_APP=app.webapp 
     
-    flask seed movies
-        
+    flask seed schools
+    flask seed linkages
     flask seed users
      
 
@@ -62,8 +58,8 @@ Ref. https://flask-migrate.readthedocs.io/en/latest/
 
     $env:FLASK_APP = "app.webapp"
 
-    flask seed movies
-
+    flask seed schools
+    flask seed linkages
     flask seed users
 
 ## After updating the model

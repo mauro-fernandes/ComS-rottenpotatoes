@@ -30,10 +30,10 @@
 
     {% if current_user.is_authenticated %}
     <h4>
-        <a href="{{ url_for('movies.new') }}">Registrar Escola</a>
+        <a href="{{ url_for('schools.new') }}">Registrar Escola</a>
     </h4>
     <h4>
-        <a href="{{ url_for('attendances.new') }}">Gravar vínculo de estudante-escola</a>
+        <a href="{{ url_for('linkages.new') }}">Gravar vínculo de estudante-escola</a>
     </h4>
     {% endif %}
     {% endblock %}

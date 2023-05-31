@@ -1,19 +1,20 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField, IntegerField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
 
-from ..models import Movie
+from ..models import Linkage
 
-bp_name = "movies"
+bp_name = "linkages"
 
 bp = Blueprint(bp_name, __name__)
 from ..webapp import db
+import app
 
 properties = {
-    "entity_name": "movie",
-    "collection_name": "lessons",
-    "list_fields": ["id","title", "Professor", "rating", "updated_at"],
+    "entity_name": "linkage",
+    "collection_name": "Linkages",
+    "list_fields": ["id","title", "Student", "enrollment", "presence", "school", "rating", "description", "created_at", "updated_at"],
 }
 
 
@@ -42,14 +43,30 @@ def index():
     Index page.
     :return: The response.
     """
-    movies = Movie.query.all()
-    return render_template(_j.index, entities=movies, **properties)
+    linkages = Linkage.query.all()
+    return render_template(_j.index, entities=linkages, **properties)
 
 
 class EditForm(FlaskForm):
-    title = StringField("title", validators=[InputRequired()])
+    #title = StringField("title", validators=[InputRequired()])
+    title = StringField("title")
     rating = StringField("rating")
     description = StringField("description")
+    
+    #from ..models import School
+    #school_id = SelectField("school", choices=School.query.all() )
+    school_id = StringField("school", validators=[InputRequired()])
+    student_id = StringField("student", validators=[InputRequired()])
+    enrollment = StringField("enrollment")
+    presence = SelectField("presence", choices=[(True, 'Present'), (False, 'Absent'), (False, 'Excused (needs send docs)')], coerce=bool)
+    
+    
+    # with app.webapp.app_context():
+    #     school = School.query.all()
+    #     student = Student.query.all()
+    # student = StringField("student")
+    # school = StringField(f"school: Put{school.id} for {school.title}")
+    
     submit = SubmitField("Submit")
 
 
@@ -71,12 +88,12 @@ def create():
     """
     form = EditForm(formdata=request.form)
     if form.validate_on_submit():
-        newmovie = Movie()
-        form.populate_obj(newmovie)
-        db.session.add(newmovie)
+        newlinkage = Linkage()
+        form.populate_obj(newlinkage)
+        db.session.add(newlinkage)
         db.session.commit()
-        flash(f"'{ newmovie.title}' created")
-        return redirect(_to.show(id=newmovie.id))
+        flash(f"'{ newlinkage.title}' created")
+        return redirect(_to.show(id=newlinkage.id))
     else:
         flash("Error in form validation", "danger")
 
@@ -87,8 +104,8 @@ def show(id):
     Show page.
     :return: The response.
     """
-    movie = db.get_or_404(Movie, id)
-    return render_template(_j.show, entity=movie, **properties)
+    linkage = db.get_or_404(Linkage, id)
+    return render_template(_j.show, entity=linkage, **properties)
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
@@ -97,8 +114,8 @@ def edit(id):
     Edit page.
     :return: The response.
     """
-    movie = db.get_or_404(Movie, id)
-    userform = EditForm(formdata=request.form, obj=movie)
+    linkage = db.get_or_404(Linkage, id)
+    userform = EditForm(formdata=request.form, obj=linkage)
     return render_template(_j.edit, form=userform, **properties)
 
 
@@ -109,12 +126,12 @@ def update(id):
     Save Edited Entity
     :return: redirect to show entity
     """
-    movie = db.get_or_404(Movie, id)
-    form = EditForm(formdata=request.form, obj=movie)
+    linkage = db.get_or_404(Linkage, id)
+    form = EditForm(formdata=request.form, obj=linkage)
     if form.validate_on_submit():
-        form.populate_obj(movie)
+        form.populate_obj(linkage)
         db.session.commit()
-        flash(f"'{ movie.title}' updated")
+        flash(f"'{ linkage.title}' updated")
         return redirect(_to.show(id=id))
     else:
         flash("Error in form validation", "danger")
@@ -126,8 +143,8 @@ def destroy(id):
     Delete Entity
     :return: redirect to list
     """
-    movie = db.get_or_404(Movie, id)
-    db.session.delete(movie)
+    linkage = db.get_or_404(Linkage, id)
+    db.session.delete(linkage)
     db.session.commit()
-    flash(f"'{ movie.title}' deleted")
+    flash(f"'{ linkage.title}' deleted")
     return redirect(_to.index())

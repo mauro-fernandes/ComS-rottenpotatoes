@@ -1,20 +1,19 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from wtforms import StringField, SubmitField, SelectField, IntegerField
+from wtforms import StringField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
 
-from ..models import Attendance
+from ..models import School
 
-bp_name = "attendances"
+bp_name = "schools"
 
 bp = Blueprint(bp_name, __name__)
 from ..webapp import db
-import app
 
 properties = {
-    "entity_name": "attendance",
-    "collection_name": "Attendances",
-    "list_fields": ["id","title", "Student", "enrollment", "presence", "lesson", "rating", "description", "created_at", "updated_at"],
+    "entity_name": "school",
+    "collection_name": "schools",
+    "list_fields": ["id","title", "Professor", "rating", "updated_at"],
 }
 
 
@@ -43,30 +42,14 @@ def index():
     Index page.
     :return: The response.
     """
-    attendances = Attendance.query.all()
-    return render_template(_j.index, entities=attendances, **properties)
+    schools = School.query.all()
+    return render_template(_j.index, entities=schools, **properties)
 
 
 class EditForm(FlaskForm):
-    #title = StringField("title", validators=[InputRequired()])
-    title = StringField("title")
+    title = StringField("title", validators=[InputRequired()])
     rating = StringField("rating")
     description = StringField("description")
-    
-    #from ..models import Movie
-    #lesson_id = SelectField("lesson", choices=Movie.query.all() )
-    lesson_id = StringField("lesson", validators=[InputRequired()])
-    student_id = StringField("student", validators=[InputRequired()])
-    enrollment = StringField("enrollment")
-    presence = SelectField("presence", choices=[(True, 'Present'), (False, 'Absent'), (False, 'Excused (needs send docs)')], coerce=bool)
-    
-    
-    # with app.webapp.app_context():
-    #     lesson = Lesson.query.all()
-    #     student = Student.query.all()
-    # student = StringField("student")
-    # lesson = StringField(f"lesson: Put{lesson.id} for {lesson.title}")
-    
     submit = SubmitField("Submit")
 
 
@@ -88,12 +71,12 @@ def create():
     """
     form = EditForm(formdata=request.form)
     if form.validate_on_submit():
-        newattendance = Attendance()
-        form.populate_obj(newattendance)
-        db.session.add(newattendance)
+        newschool = School()
+        form.populate_obj(newschool)
+        db.session.add(newschool)
         db.session.commit()
-        flash(f"'{ newattendance.title}' created")
-        return redirect(_to.show(id=newattendance.id))
+        flash(f"'{ newschool.title}' created")
+        return redirect(_to.show(id=newschool.id))
     else:
         flash("Error in form validation", "danger")
 
@@ -104,8 +87,8 @@ def show(id):
     Show page.
     :return: The response.
     """
-    attendance = db.get_or_404(Attendance, id)
-    return render_template(_j.show, entity=attendance, **properties)
+    school = db.get_or_404(School, id)
+    return render_template(_j.show, entity=school, **properties)
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
@@ -114,8 +97,8 @@ def edit(id):
     Edit page.
     :return: The response.
     """
-    attendance = db.get_or_404(Attendance, id)
-    userform = EditForm(formdata=request.form, obj=attendance)
+    school = db.get_or_404(School, id)
+    userform = EditForm(formdata=request.form, obj=school)
     return render_template(_j.edit, form=userform, **properties)
 
 
@@ -126,12 +109,12 @@ def update(id):
     Save Edited Entity
     :return: redirect to show entity
     """
-    attendance = db.get_or_404(Attendance, id)
-    form = EditForm(formdata=request.form, obj=attendance)
+    school = db.get_or_404(School, id)
+    form = EditForm(formdata=request.form, obj=school)
     if form.validate_on_submit():
-        form.populate_obj(attendance)
+        form.populate_obj(school)
         db.session.commit()
-        flash(f"'{ attendance.title}' updated")
+        flash(f"'{ school.title}' updated")
         return redirect(_to.show(id=id))
     else:
         flash("Error in form validation", "danger")
@@ -143,8 +126,8 @@ def destroy(id):
     Delete Entity
     :return: redirect to list
     """
-    attendance = db.get_or_404(Attendance, id)
-    db.session.delete(attendance)
+    school = db.get_or_404(School, id)
+    db.session.delete(school)
     db.session.commit()
-    flash(f"'{ attendance.title}' deleted")
+    flash(f"'{ school.title}' deleted")
     return redirect(_to.index())

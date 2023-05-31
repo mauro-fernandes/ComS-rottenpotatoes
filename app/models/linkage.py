@@ -3,20 +3,20 @@ from sqlalchemy.sql import func
 from flask_login import UserMixin
 
 
-class Attendance(db.Model):
+class Linkage(db.Model):
     #TODO: Add columns, etc, here
     
-    __tablename__ = "attendance"
+    __tablename__ = "linkage"
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     rating = db.Column(db.String)
     comments = db.Column(db.String)
 
-    lesson_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
-    #lesson = db.relationship("movie.name", backref="attendance", lazy=True)
+    school_id = db.Column(db.Integer, db.ForeignKey("school.id"), nullable=False)
+    #school = db.relationship("school.name", backref="linkage", lazy=True)
     student_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    #student = db.relationship("User.username", backref="attendance", lazy=True)
+    #student = db.relationship("User.username", backref="linkage", lazy=True)
     presence = db.Column(db.Boolean(("Present")), default=False, nullable=False)    
        
     release_date = db.Column(db.DateTime)
@@ -26,4 +26,4 @@ class Attendance(db.Model):
     )
 
     def __repr__(self):
-        return "<Attendance %r>" % self.id
+        return "<Linkage %r>" % self.id
