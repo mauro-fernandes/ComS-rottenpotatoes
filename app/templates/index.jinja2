@@ -13,26 +13,27 @@
 
 {% block content %}
 <h1>
-    Welcome!!!
+    Seja Bem Vindo!!!
     <img src="{{ url_for('static', filename='img/Logo_UnB.png') }}" alt="UnB" width="25" height="25">
 </h1>
 
 <h2>
-    This is the Attendance System of the University of Brasilia
+    Esse é o ComS: <p>
+    Um Sistema de Integração entre Estudantes de Licenciaturas e Escolas de Ensino Básico <p/> 
 </h2>
 
 <class="important">
 
-        The Attendance System Team welcomes would like to show the news and the launch of this release...
+        The Team says welcome and would like to show the news and the launch of this release...
     </p>
 
 
     {% if current_user.is_authenticated %}
     <h4>
-        <a href="{{ url_for('movies.new') }}">Register Lesson</a>
+        <a href="{{ url_for('movies.new') }}">Registrar Escola</a>
     </h4>
     <h4>
-        <a href="{{ url_for('attendances.new') }}">Record presence</a>
+        <a href="{{ url_for('attendances.new') }}">Gravar vínculo de estudante-escola</a>
     </h4>
     {% endif %}
     {% endblock %}
