@@ -1,0 +1,13 @@
+{% extends 'base.jinja2' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}{{current_user.username}} Profile{% endblock %}
+
+
+{% block content %}
+
+<h1>Hello, {{ current_user.username}}! This is your profile</h1>
+
+
+{% endblock %}
+
