@@ -17,7 +17,7 @@ class Linkage(db.Model):
     #school = db.relationship("school.name", backref="linkage", lazy=True)
     student_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     #student = db.relationship("User.username", backref="linkage", lazy=True)
-    presence = db.Column(db.Boolean(("Present")), default=False, nullable=False)    
+    presence = db.Column(db.Boolean(("Present")), default=False, nullable=False) 
        
     release_date = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
