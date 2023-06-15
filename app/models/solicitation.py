@@ -4,9 +4,9 @@ from typing import List, Optional
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 
-class Linkage(db.Model):
+class Solicitation(db.Model):
     #TODO: Add columns, etc, here
-    __tablename__ = "linkage"
+    __tablename__ = "solicitation"
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
@@ -15,11 +15,11 @@ class Linkage(db.Model):
     active = db.Column(db.Boolean, default=True)
 
     student_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    student = db.relationship("User", backref="linkage", foreign_keys=[student_id], lazy=True)
+    student = db.relationship("User", backref="solicitation", foreign_keys=[student_id], lazy=True)
     school_id = db.Column(db.Integer, db.ForeignKey("school.id"), nullable=False)
-    school = db.relationship("School", backref="linkage", foreign_keys=[school_id])
+    school = db.relationship("School", backref="solicitation", foreign_keys=[school_id])
     #professor_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    #professor = db.relationship("User", backref="linkage", lazy=True, foreign_keys=[professor_id])
+    #professor = db.relationship("User", backref="solicitation", lazy=True, foreign_keys=[professor_id])
        
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
@@ -29,4 +29,4 @@ class Linkage(db.Model):
     )
 
     def __repr__(self):
-        return "<Linkage %r>" % self.id
+        return "<solicitation %r>" % self.id

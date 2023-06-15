@@ -6,7 +6,7 @@
 
 <head>
     {% block head %}
-    <script src="../static/js/color-modes.js"></script>
+    <script src="/static/js/color-modes.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -24,7 +24,7 @@
     <title>  {%block title%}{% endblock %} - ComS</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/jumbotron/" type="text/css">
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     
 
     <!-- Custom styles for this template -->
@@ -69,6 +69,11 @@
           height: 2.75rem;
           overflow-y: hidden;
         }
+
+        .nave{
+            background-color: #133E79;
+            color: #133E79;
+        }
   
         .nav-scroller .nav {
           display: flex;
@@ -82,7 +87,7 @@
         }
   
         .btn-bd-primary {
-          --bd-violet-bg: #712cf9;
+          --bd-violet-bg: #133E79;
           --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
   
           --bs-btn-font-weight: 600;
@@ -90,12 +95,12 @@
           --bs-btn-bg: var(--bd-violet-bg);
           --bs-btn-border-color: var(--bd-violet-bg);
           --bs-btn-hover-color: var(--bs-white);
-          --bs-btn-hover-bg: #6528e0;
-          --bs-btn-hover-border-color: #6528e0;
+          --bs-btn-hover-bg: hsl(234, 85%, 37%);
+          --bs-btn-hover-border-color: hsl(234, 75%, 52%);
           --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
           --bs-btn-active-color: var(--bs-btn-hover-color);
-          --bs-btn-active-bg: #5a23c8;
-          --bs-btn-active-border-color: #5a23c8;
+          --bs-btn-active-bg: hsl(234, 70%, 46%);
+          --bs-btn-active-border-color: hsl(234, 70%, 46%);
         }
   
         .bd-mode-toggle {
@@ -108,25 +113,32 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg mb-4 navbar-toggleable bd-mode-toggle">
+    <nav style="background:#008940; " class="navbar navbar-light navbar-expand-lg mb-4 mobile-toggler">
+      
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle theme(auto)">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse text-primary" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    {{ render_nav_item('main.index', 'Home') }}
+                    {{ render_nav_item('main.index', 'Home', _use_li=True) }}
                     {{ render_nav_item('schools.index', 'Escolas') }}
                     
-                    {% if current_user.is_authenticated %}
-                    {{ render_nav_item('linkages.index', 'Vínculos') }}         {# move to show inside school? #}
-                    {{ render_nav_item('users.index', 'Usuários' ) }}
+                    {% if current_user.username=='admin' %}
+                    {{ render_nav_item('solicitations.index', 'Buscar') }}
+                    {{ render_nav_item('linkages.index', 'Vínculos') }}         
+                    {{ render_nav_item('users.index', 'Usuários') }}         
                     {{ render_nav_item('auth.profile', current_user.username ) }}
                     {{ render_nav_item('auth.logout', 'Logout') }}
-                    
-                    {% else %}
+                    {% elif current_user.is_authenticated %}
+                    {{ render_nav_item('solicitations.index', 'Buscar') }}
+                    {{ render_nav_item('linkages.index', 'Vínculos') }}
+                    {{ render_nav_item('auth.profile', current_user.username ) }}
+                    {{ render_nav_item('auth.logout', 'Logout') }}
+                    {% endif %}
+                    {% if not current_user.is_authenticated %}
                     {{ render_nav_item('auth.login', 'Login') }}
                     {% endif %}
                 </ul>
@@ -159,7 +171,7 @@
   
       <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
         <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
-          title="Toggle theme" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+          title="Toggle theme" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme(auto)">
           <svg class="bi my-1 theme-icon-active" width="1em" height="1em" title="color mode">
             <use href="#circle-half"></use>
           </svg>
@@ -211,8 +223,11 @@
 
     <main class="container">
         {{ render_messages(container=False, dismissible=True, dismiss_animate=True) }}
+        
         <!-- Your page content -->
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
+    
     </main>
 
     <footer class="text-center">
@@ -224,7 +239,7 @@
                 href="https://github.com/mauro-fernandes/ComS-rottenpotatoes">GitHub-ComS</a>
         </small>
         </div>
-        
+
 
         {% endblock %}
     </footer>
@@ -232,7 +247,6 @@
     {% block scripts %}
     <!-- Optional JavaScript -->
     {{ bootstrap.load_js() }}
-
     {% endblock %}
 </body>
 

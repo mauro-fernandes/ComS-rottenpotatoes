@@ -3,18 +3,18 @@ from wtforms import StringField, SubmitField, SelectField, IntegerField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired, NumberRange
 
-from ..models import Linkage, School
+from ..models import Solicitation, School
 
-bp_name = "linkages"
+bp_name = "solicitations"
 
 bp = Blueprint(bp_name, __name__)
 from ..webapp import db
 import app
 
 properties = {
-    "entity_name": "linkage",
-    "collection_name": "Vínculos",
-    "list_fields": ["id", "student_id", "school_id", "active", "title", "comments", "rating", "created_at", "updated_at"],
+    "entity_name": "solicitation",
+    "collection_name": "Solicitações",
+    "list_fields": ["id", "student_id", "school_id", "status", "title", "comments", "created_at", "updated_at"],
 }
 
 
@@ -43,8 +43,8 @@ def index():
     Index page.
     :return: The response.
     """
-    linkages = Linkage.query.all()
-    return render_template(_j.index, entities=linkages, **properties)
+    solicitations = Solicitation.query.all()
+    return render_template(_j.index, entities=solicitations, **properties)
 
 
 class EditForm(FlaskForm):
@@ -53,11 +53,11 @@ class EditForm(FlaskForm):
     description = StringField("description")
     
     #from ..models import School
-    #school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()], coerce=int)
+    #school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()])
     school_id = StringField("school_id", validators=[InputRequired()])
     student_id = StringField("student_id", validators=[InputRequired()])
-    presence = SelectField("presence", choices=[(True, 'Present'), (False, 'Absent'), (False, 'Excused (needs send docs)')], coerce=bool)
-    
+    status = SelectField("Status", choices=[(True, 'Accepted'), (False, 'Rejected'), (False, 'Needs send docs)')], coerce=bool)   
+    comments = StringField("comments")
     
     # with app.webapp.app_context():
     #     school = School.query.all()
@@ -86,12 +86,12 @@ def create():
     """
     form = EditForm(formdata=request.form)
     if form.validate_on_submit():
-        newlinkage = Linkage()
-        form.populate_obj(newlinkage)
-        db.session.add(newlinkage)
+        newsolicitation = Solicitation()
+        form.populate_obj(newsolicitation)
+        db.session.add(newsolicitation)
         db.session.commit()
-        flash(f"'{ newlinkage.title}' created")
-        return redirect(_to.show(id=newlinkage.id))
+        flash(f"'{ newsolicitation.title}' created")
+        return redirect(_to.show(id=newsolicitation.id))
     else:
         flash("Error in form validation", "danger")
 
@@ -102,8 +102,8 @@ def show(id):
     Show page.
     :return: The response.
     """
-    linkage = db.get_or_404(Linkage, id)
-    return render_template(_j.show, entity=linkage, **properties)
+    solicitation = db.get_or_404(Solicitation, id)
+    return render_template(_j.show, entity=solicitation, **properties)
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
@@ -112,8 +112,8 @@ def edit(id):
     Edit page.
     :return: The response.
     """
-    linkage = db.get_or_404(Linkage, id)
-    userform = EditForm(formdata=request.form, obj=linkage)
+    solicitation = db.get_or_404(Solicitation, id)
+    userform = EditForm(formdata=request.form, obj=solicitation)
     return render_template(_j.edit, form=userform, **properties)
 
 
@@ -124,12 +124,12 @@ def update(id):
     Save Edited Entity
     :return: redirect to show entity
     """
-    linkage = db.get_or_404(Linkage, id)
-    form = EditForm(formdata=request.form, obj=linkage)
+    solicitation = db.get_or_404(Solicitation, id)
+    form = EditForm(formdata=request.form, obj=solicitation)
     if form.validate_on_submit():
-        form.populate_obj(linkage)
+        form.populate_obj(solicitation)
         db.session.commit()
-        flash(f"'{ linkage.title}' updated")
+        flash(f"'{ solicitation.title}' updated")
         return redirect(_to.show(id=id))
     else:
         flash("Error in form validation", "danger")
@@ -141,8 +141,8 @@ def destroy(id):
     Delete Entity
     :return: redirect to list
     """
-    linkage = db.get_or_404(Linkage, id)
-    db.session.delete(linkage)
+    solicitation = db.get_or_404(Solicitation, id)
+    db.session.delete(solicitation)
     db.session.commit()
-    flash(f"'{ linkage.title}' deleted")
+    flash(f"'{ solicitation.title}' deleted")
     return redirect(_to.index())

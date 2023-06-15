@@ -1,5 +1,6 @@
 from . import db
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 
 class School(db.Model):
@@ -20,5 +21,5 @@ class School(db.Model):
         )
 
     def __repr__(self):
-        return f"\n<<School id = {self.id}; name = {self.title}>>; rating = {self.rating}; description = {self.description}; created_at = {self.created_at}>>\n"
+        return f"<School id = {self.id}; name = {self.title}>"
     

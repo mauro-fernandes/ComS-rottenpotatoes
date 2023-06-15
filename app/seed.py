@@ -29,3 +29,5 @@ linkages = [
     { 'title': 'test', 'school_id': 2, 'student_id':2, 'presence': True},
     
     ]
+
+solicitations = []
