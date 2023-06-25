@@ -1,0 +1,38 @@
+{% extends 'base.jinja2' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block header %}
+<h1>{% block title %}Upload{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data" class="d-inline-flex p-0">
+  {{ render_form(form) }}
+  <div>
+    <button class="btn btn-outline-success" type="submit">Upload</button>
+  </div>
+</form>
+
+
+<div class="mb-5 col-sm">
+  <form class="d-sm-flex p-5">
+</div>
+
+<div class="mb-3 col-sm-4">
+  <label for="formFileMultiple" class="form-label col" >Faça o upload dos seus documentos</label>
+  <input class="form-control d-inline-flex p-2" type="file" id="formFileMultiple" multiple>
+</div>
+
+<div class="mb-3">
+  <button class="btn btn-outline-success" type="submit">Upload</button>
+</div>
+<!--form action="/" method="post">
+    {{ form.username }}
+    {{ form.recaptcha }}
+  -->
+
+
+</form>
+
+
+{% endblock %}

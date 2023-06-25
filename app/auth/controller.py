@@ -23,9 +23,13 @@ from ..webapp import db, bcrypt
 from ..models import User
 from .forms import login_form, Register_form
 
-
 from . import bp
 
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
+from werkzeug.utils import secure_filename
+
+from wtforms import StringField, SubmitField, SelectField, IntegerField
 
 @bp.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
@@ -104,6 +108,26 @@ def register():
         title="Register",
         btn_action="Register account",
     )
+
+# Upload route ######################################################################
+
+class PhotoForm(FlaskForm):
+    photo = FileField(validators=[FileRequired()])
+
+@bp.route('/docs/', methods=['GET', 'POST'], strict_slashes=False)
+def upload():
+    form = PhotoForm()
+
+    if form.validate_on_submit():
+        f = form.photo.data
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(
+            app.instance_path, 'photos', filename
+        ))
+        submit = SubmitField('Upload')
+        return redirect(url_for('main'))
+
+    return render_template("users/upload.jinja2", form=form)
 
 
 @bp.route("/logout")

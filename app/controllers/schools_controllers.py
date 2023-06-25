@@ -50,7 +50,9 @@ class EditForm(FlaskForm):
     title = StringField("title", validators=[InputRequired()])
     rating = StringField("rating")
     description = StringField("description")
+    release_date = StringField("release_date")
     submit = SubmitField("Submit")
+    
 
 
 @bp.route("/new", methods=["GET"])

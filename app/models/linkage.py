@@ -12,7 +12,7 @@ class Linkage(db.Model):
     title = db.Column(db.String)
     rating = db.Column(db.String(6))
     comments = db.Column(db.String)
-    active = db.Column(db.Boolean, default=True)
+    active = db.Column(db.Integer)
 
     student_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     student = db.relationship("User", backref="linkage", foreign_keys=[student_id], lazy=True)

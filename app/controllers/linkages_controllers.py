@@ -56,7 +56,7 @@ class EditForm(FlaskForm):
     #school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()], coerce=int)
     school_id = StringField("school_id", validators=[InputRequired()])
     student_id = StringField("student_id", validators=[InputRequired()])
-    presence = SelectField("presence", choices=[(True, 'Present'), (False, 'Absent'), (False, 'Excused (needs send docs)')], coerce=bool)
+    active = SelectField("Está ativo?", choices=[(1, 'Sim'), (0, 'Não')])
     
     
     # with app.webapp.app_context():

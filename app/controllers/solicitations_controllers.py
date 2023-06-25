@@ -52,8 +52,14 @@ class EditForm(FlaskForm):
     rating = StringField("rating")
     description = StringField("description")
     
-    #from ..models import School
-    #school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()])
+    '''
+    @School.query.all()
+    def load_school(school_id):
+        return School.query.get(int(school_id))
+    from ..models import School
+    school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()])
+    '''
+    
     school_id = StringField("school_id", validators=[InputRequired()])
     student_id = StringField("student_id", validators=[InputRequired()])
     status = SelectField("Status", choices=[(True, 'Accepted'), (False, 'Rejected'), (False, 'Needs send docs)')], coerce=bool)   

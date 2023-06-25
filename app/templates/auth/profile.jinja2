@@ -8,6 +8,15 @@
 
 <h1>Hello, {{ current_user.username}}! This is your profile</h1>
 
+<div class="mb-3">
+    <label for="formFileDisabled" class="form-label d-inline-flex p-2">Disabled file input example</label>
+    <input class="form-control" type="file" id="formFileDisabled" disabled>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
 
 {% endblock %}
 
