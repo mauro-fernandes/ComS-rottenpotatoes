@@ -109,7 +109,7 @@ def register():
         btn_action="Register account",
     )
 
-# Upload route ######################################################################
+# docs/Upload route ######################################################################
 
 class PhotoForm(FlaskForm):
     photo = FileField(validators=[FileRequired()])
@@ -127,7 +127,7 @@ def upload():
         submit = SubmitField('Upload')
         return redirect(url_for('main'))
 
-    return render_template("users/upload.jinja2", form=form)
+    return render_template("users/docs.jinja2", form=form)
 
 
 @bp.route("/logout")
