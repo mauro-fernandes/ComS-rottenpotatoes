@@ -29,6 +29,43 @@
 
     <!-- Custom styles for this template -->
     <style>
+      .nav_bar_box {
+        background-color: rgba(255, 255, 230, 0.5);
+        padding: 10px;
+        border-radius: 10px;
+        display: inline-block;
+        border: 2px solid black;
+        width: 120px; /* Adjust the width as needed */
+        margin-right: 10px; /* Adjust the margin as needed */
+      }
+      .nav_bar_box_pad_left {
+        background-color: rgba(255, 255, 230, 0.5);
+        padding: 10px;
+        border-radius: 10px;
+        display: inline-block;
+        border: 2px solid black;
+        width: 120px; /* Adjust the width as needed */
+        margin-right: 10px; /* Adjust the margin as needed */
+        margin-left: 10px; /* Adjust the margin as needed */
+      }
+      .nav_bar_box_long {
+        background-color: rgba(255, 255, 230, 0.5);
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid black;
+        display: inline-block;
+        width: 160px; /* Adjust the width as needed */
+        margin-right: 10px; /* Adjust the margin as needed */
+      }
+      .nav_bar_box_short {
+        background-color: rgba(255, 255, 230, 0.5);
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid black;
+        display: inline-block;
+        width: 80px; /* Adjust the width as needed */
+        margin-right: 10px; /* Adjust the margin as needed */
+      }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -118,17 +155,28 @@
         </button>
         <div class="collapse navbar-collapse text-primary" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            <div class="nav_bar_box">
             {{ render_nav_item('main.index', 'Home', _use_li=True) }}
-
+            </div>
             {% if current_user.is_student==False %} <!--{#admin#}-->
+            <div class="nav_bar_box">
             {{ render_nav_item('schools.index', 'Escolas') }}
+	          </div>
+            <div class="nav_bar_box">
             {{ render_nav_item('users.index', 'Usuários') }}
-            {{ render_nav_item('linkages.index', 'Vínculos') }}
+	          </div>
+            <div class="nav_bar_box">
+	    {{ render_nav_item('linkages.index', 'Vínculos') }}
+	    </div>
             {% endif %}
 
             {% if current_user.is_authenticated %}
+            <div class="nav_bar_box_long">
             {{ render_nav_item('solicitations.index', 'Solicitações') }}
+	          </div>
+            <div class="nav_bar_box_short">
             {{ render_nav_item ('auth.upload', 'Docs') }}
+	          </div>
 
           </ul>
 
@@ -143,10 +191,16 @@
         </ul>
 
         <ul class="navbar-nav collapse navbar-collapse mr-auto position-relative top-0 end-0" id="navbarSupportedContent">
+            <div class="nav_bar_box_pad_left">
           {{ render_nav_item('auth.profile', (current_user.username|upper)) }}
+	          </div>
+            <div class="nav_bar_box">
           {{ render_nav_item('auth.logout', 'Logout') }}
+	          </div>
           {% elif not current_user.is_authenticated %}
+            <div class="nav_bar_box">
           {{ render_nav_item('auth.login', 'Login') }}
+	          </div>
           {% endif %}
         </ul>
 
