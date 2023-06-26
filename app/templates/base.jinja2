@@ -109,7 +109,7 @@
   </head>
 
   <body >
-    <nav style="background:#008940;" class="navbar navbar-light navbar-expand-xl mb-5 fs-5 fw-bold mobile-toggler bg-gradient">
+    <nav style="background:#008940;" class="navbar navbar-light navbar-expand-lg mb-5 fs-4 fw-bold mobile-toggler bg-gradient">
 
       <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -117,8 +117,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse text-primary" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            {{ render_nav_item('main.index', 'Home', _use_li=True) }}
+          <ul class="navbar-nav nav-pills nav-link nav-fill ">
+            
+              {{ render_nav_item('main.index', 'Home', _use_li=True) }}
+            
 
             {% if current_user.is_student==False %} <!--{#admin#}-->
             {{ render_nav_item('schools.index', 'Escolas') }}
