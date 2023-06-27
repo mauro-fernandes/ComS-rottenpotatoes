@@ -109,15 +109,15 @@
   </head>
 
   <body >
-    <nav style="background:#008940;" class="navbar navbar-light navbar-expand-lg mb-5 fs-4 fw-bold mobile-toggler bg-gradient">
+    <nav style="background:#008940;" class="navbar navbar-dark navbar-expand-lg mb-5 fs-4 fw-bold mobile-toggler bg-gradient">
 
       <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle theme(auto)">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse text-primary" id="navbarSupportedContent">
-          <ul class="navbar-nav nav-pills nav-link nav-fill ">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav-pills  nav-fill ">
             
               {{ render_nav_item('main.index', 'Home', _use_li=True) }}
             
@@ -144,7 +144,7 @@
             </form>
         </ul>
 
-        <ul class="navbar-nav collapse navbar-collapse mr-auto position-relative top-0 end-0" id="navbarSupportedContent">
+        <ul class="navbar-nav nav-pills  nav-fill collapse navbar-collapse mr-auto position-relative top-0 end-0" id="navbarSupportedContent">
           {{ render_nav_item('auth.profile', (current_user.username|upper)) }}
           {{ render_nav_item('auth.logout', 'Logout') }}
           {% elif not current_user.is_authenticated %}
