@@ -29,6 +29,24 @@
 
     <!-- Custom styles for this template -->
     <style>
+      .nav_bar_box {
+        background-color: transparent;
+        color: #ffffff;
+        padding: 0px;
+        border-radius: 5px;
+        border: 1px solid #ffffff;
+        width: auto; /* Adjust the width as needed */
+        height: 2.6rem; /* Adjust the height as needed */
+        margin-right: 10px; /* Adjust the margin as needed */
+        
+        
+      }
+
+      .nav_bar_box:hover {
+        background-color: hsl(215, 85%, 37%);
+        color: #133E79;
+      }
+      
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -82,7 +100,7 @@
       }
 
       .btn-bd-primary {
-        --bd-violet-bg: #133E79;
+        --bd-violet-bg: hsl(215, 73%, 27%);
         --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
 
         --bs-btn-font-weight: 600;
@@ -90,11 +108,11 @@
         --bs-btn-bg: var(--bd-violet-bg);
         --bs-btn-border-color: var(--bd-violet-bg);
         --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: hsl(234, 85%, 37%);
-        --bs-btn-hover-border-color: hsl(234, 75%, 52%);
+        --bs-btn-hover-bg: hsl(215, 85%, 37%);
+        --bs-btn-hover-border-color: hsl(215, 75%, 52%);
         --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
         --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: hsl(234, 70%, 46%);
+        --bs-btn-active-bg: hsl(215, 70%, 46%);
         --bs-btn-active-border-color: hsl(234, 70%, 46%);
       }
 
@@ -109,26 +127,36 @@
   </head>
 
   <body >
-    <nav style="background:#008940;" class="navbar navbar-dark navbar-expand-xl mb-5 fs-5 fw-bold mobile-toggler bg-gradient">
-
-      <div class="container">
+<   <nav style="background:#008940;" class="navbar navbar-dark navbar-expand-lg mb-5 fs-6 fw-semibold mobile-toggler bg-gradient" >
+      <div class="container" >
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle theme(auto)">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse text-primary" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse text-white nav-pills" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            {{ render_nav_item('main.index', 'Home', _use_li=True) }}
-
+            <div class="nav_bar_box" >
+            {{ render_nav_item('main.index', 'Home', _use_li=False) }}
+            </div>
             {% if current_user.is_student==False %} <!--{#admin#}-->
+            <div class="nav_bar_box">
             {{ render_nav_item('schools.index', 'Escolas') }}
+	          </div>
+            <div class="nav_bar_box">
             {{ render_nav_item('users.index', 'Usuários') }}
-            {{ render_nav_item('linkages.index', 'Vínculos') }}
+	          </div>
+            <div class="nav_bar_box">
+	    {{ render_nav_item('linkages.index', 'Vínculos') }}
+	    </div>
             {% endif %}
 
             {% if current_user.is_authenticated %}
+            <div class="nav_bar_box">
             {{ render_nav_item('solicitations.index', 'Solicitações') }}
+	          </div>
+            <div class="nav_bar_box">
             {{ render_nav_item ('auth.upload', 'Docs') }}
+	          </div>
 
           </ul>
 
@@ -136,17 +164,23 @@
 
         <ul class="navbar-nav collapse navbar-collapse mr-auto position-relative top-0 end-0" id="navbarSupportedContent">
             <form class="d-flex" role="search">
-              <input class="form-control form-control-sm me-1 bg-secondary-subtle container-fluid" type="search"
+              <input class="form-control form-control-sm me-1 bg-221259 container-fluid" type="search"
                 placeholder="Filtrar" aria-label="Search">
               <button class="btn btn-outline-light" type="submit">Buscar</button>
             </form>
         </ul>
 
         <ul class="navbar-nav collapse navbar-collapse mr-auto position-relative top-0 end-0" id="navbarSupportedContent">
+            <div class="nav_bar_box">
           {{ render_nav_item('auth.profile', (current_user.username|upper)) }}
+	          </div>
+            <div class="nav_bar_box">
           {{ render_nav_item('auth.logout', 'Logout') }}
+	          </div>
           {% elif not current_user.is_authenticated %}
+            <div class="nav_bar_box">
           {{ render_nav_item('auth.login', 'Login') }}
+	          </div>
           {% endif %}
         </ul>
 
