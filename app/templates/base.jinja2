@@ -127,7 +127,7 @@
   </head>
 
   <body >
-<   <nav style="background:#008940;" class="navbar navbar-dark navbar-expand-lg mb-5 fs-6 fw-semibold mobile-toggler bg-gradient" >
+    <nav style="background:#008940;" class="navbar navbar-dark navbar-expand-lg mb-5 fs-6 fw-semibold mobile-toggler bg-gradient" >
       <div class="container" >
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle theme(auto)">
@@ -136,7 +136,7 @@
         <div class="collapse navbar-collapse text-white nav-pills" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <div class="nav_bar_box" >
-            {{ render_nav_item('main.index', 'Home', _use_li=False) }}
+            {{ render_nav_item('main.index', 'Home') }}
             </div>
             {% if current_user.is_student==False %} <!--{#admin#}-->
             <div class="nav_bar_box">
@@ -162,19 +162,19 @@
 
         </div>
 
-        <ul class="navbar-nav collapse navbar-collapse mr-auto position-relative top-0 end-0" id="navbarSupportedContent">
+        <ul class="navbar-nav collapse navbar-collapse mr-auto position-relative" id="navbarSupportedContent">
             <form class="d-flex" role="search">
               <input class="form-control form-control-sm me-1 bg-221259 container-fluid" type="search"
-                placeholder="Filtrar" aria-label="Search">
-              <button class="btn btn-outline-light" type="submit">Buscar</button>
+                placeholder="Filtrar" aria-label="Search" id="filter">
+              <button class="btn btn-outline-light mr-2 me-2" type="submit">Buscar</button>
             </form>
         </ul>
 
-        <ul class="navbar-nav collapse navbar-collapse mr-auto position-relative top-0 end-0" id="navbarSupportedContent">
-            <div class="nav_bar_box">
+        <ul class="navbar-nav collapse navbar-collapse mr-2 position-absolute top-50 end-0 translate-middle-y " id="navbarSupportedContent">
+            <div class="nav_bar_box ms-2">
           {{ render_nav_item('auth.profile', (current_user.username|upper)) }}
 	          </div>
-            <div class="nav_bar_box">
+            <div class="nav_bar_box ml-2">
           {{ render_nav_item('auth.logout', 'Logout') }}
 	          </div>
           {% elif not current_user.is_authenticated %}
