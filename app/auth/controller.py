@@ -109,12 +109,19 @@ def register():
         btn_action="Register account",
     )
 
-# docs/Upload route ######################################################################
+# docs&Upload route/controllers ######################################################################
+
+properties = {                                          # TODO: finish this
+    "entity_name": "documento",
+    "collection_name": "documentos",
+    "list_fields": ["id", "student_id", "status", "title", "comments", "created_at", "updated_at"],
+}
+
 
 class PhotoForm(FlaskForm):
     photo = FileField(validators=[FileRequired()])
 
-@bp.route('/docs/', methods=['GET', 'POST'], strict_slashes=False)
+@bp.route('/docs/', methods=['GET', 'POST'], strict_slashes=False)      # TODO: fix renderization to upload docs
 def upload():
     form = PhotoForm()
 
@@ -127,7 +134,9 @@ def upload():
         submit = SubmitField('Upload')
         return redirect(url_for('main'))
 
-    return render_template("users/docs.jinja2", form=form)
+    docs_sent = db.session.query(User).filter(User.id == 1).first()
+    
+    return render_template("users/docs.jinja2", form=form, **properties) #, entities=docs_sent) #, docs_sent=docs_sent) ???
 
 
 @bp.route("/logout")

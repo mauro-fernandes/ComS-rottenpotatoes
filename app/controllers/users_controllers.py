@@ -18,7 +18,7 @@ from ..webapp import db
 
 properties = {
     "entity": "user",
-    "title": "Users",
+    "title": "Usuários",
     "list_fields": ["id", "name", "username", "email", "is_student", "updated_at"],
 }
 

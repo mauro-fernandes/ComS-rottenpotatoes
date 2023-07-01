@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
 
-from ..models import School
+from ..models import School, User
 
 bp_name = "schools"
 
@@ -12,7 +12,7 @@ from ..webapp import db
 
 properties = {
     "entity_name": "school",
-    "collection_name": "schools",
+    "collection_name": "Escolas",
     "list_fields": ["id","title", "Professor", "rating", "updated_at"],
 }
 
@@ -48,6 +48,7 @@ def index():
 
 class EditForm(FlaskForm):
     title = StringField("title", validators=[InputRequired()])
+    #professor = StringField("professor")
     rating = StringField("rating")
     description = StringField("description")
     release_date = StringField("release_date")
