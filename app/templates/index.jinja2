@@ -12,21 +12,20 @@
 {% endblock %}
 
 {% block content %}
-<h1>
-    Seja Bem Vindo!!!
-    <img src="{{ url_for('static', filename='img/Logo_UnB.png') }}" alt="UnB" width="38" height="25">
-</h1>
+    <h1>
+        Seja Bem Vindo!!!
+        <img src="{{ url_for('static', filename='img/Logo_UnB.png') }}" alt="UnB" width="40" height="25">
+    </h1>
 
-<h2>
-    Esse é o ComS: <p>
-    Um Sistema de Integração entre Estudantes de Licenciaturas e Escolas de Ensino Básico <p/> 
-</h2>
+    <h2>
+        Esse é o ComS:
+        <p class="important">
+        Um Sistema de Integração entre Estudantes de Licenciaturas e Escolas de Ensino Básico</p>
+    </h2>
 
-<class="important">
-    <p>
-
-        ComS: daqui você vai sair Com eStagio!
-    </p>
+    <p class="important">
+            ComS: daqui você vai sair Com eStagio!
+        </p>
 
 
     {% if current_user.is_authenticated %}
@@ -40,6 +39,12 @@
         <a href="{{ url_for('solicitations.new') }}">Aplique para uma escola de seu interesse</a>
     </h4>
     {% endif %}
+    {%if not current_user.is_authenticated %}
+    <h4>
+        <a href="{{ url_for('schools.index') }}">Escolas</a>
+    </h4>
+    {%endif%}
+
     {% endblock %}
 
     {% block scripts %}
