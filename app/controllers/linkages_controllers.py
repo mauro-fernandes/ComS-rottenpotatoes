@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, SelectField, IntegerField
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired, NumberRange
 
-from ..models import Linkage, School
+from ..models import Linkage, School, User
 
 bp_name = "linkages"
 
@@ -51,19 +51,11 @@ class EditForm(FlaskForm):
     title = StringField("title", validators=[InputRequired()])
     rating = StringField("rating")
     description = StringField("description")
-    
-    #from ..models import School
-    #school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()], coerce=int)
-    school_id = StringField("school_id", validators=[InputRequired()])
-    student_id = StringField("student_id", validators=[InputRequired()])
+        
+    school_id = SelectField("school_id", choices=[])
+    student_id = SelectField("student_id", choices=[])
     active = SelectField("Está ativo?", choices=[(1, 'Sim'), (0, 'Não')])
-    
-    
-    # with app.webapp.app_context():
-    #     school = School.query.all()
-    #     student = Student.query.all()
-    # student = StringField("student")
-    # school = StringField(f"school: Put{school.id} for {school.title}")
+    comments = StringField("comments")
     
     submit = SubmitField("Submit")
 
@@ -75,6 +67,8 @@ def new():
     :return: render create template
     """
     form = EditForm()
+    form.student_id.choices = [(user.id, user.name) for user in User.query.filter_by(is_student=True).all()]
+    form.school_id.choices = [(school.id, school.title) for school in School.query.all()]
     return render_template(_j.new, form=form, **properties)
 
 
@@ -85,15 +79,17 @@ def create():
     :return: redirect to view new entity
     """
     form = EditForm(formdata=request.form)
-    if form.validate_on_submit():
-        newlinkage = Linkage()
-        form.populate_obj(newlinkage)
-        db.session.add(newlinkage)
-        db.session.commit()
-        flash(f"'{ newlinkage.title}' created")
-        return redirect(_to.show(id=newlinkage.id))
-    else:
-        flash("Error in form validation", "danger")
+    
+    #if form.validate():
+    newlinkage = Linkage()
+    print("---> form.data: \n",form.data)
+    form.populate_obj(newlinkage)
+    db.session.add(newlinkage)
+    db.session.commit()
+    flash(f"'{ newlinkage.title}' created")
+    return redirect(_to.show(id=newlinkage.id))
+    #else:
+        #flash("Error in form validation", "danger")
 
 
 @bp.route("/<int:id>/show", methods=["GET"])
@@ -114,6 +110,8 @@ def edit(id):
     """
     linkage = db.get_or_404(Linkage, id)
     userform = EditForm(formdata=request.form, obj=linkage)
+    userform.student_id.choices = [(user.id, user.name) for user in User.query.filter_by(is_student=True).all()]
+    userform.school_id.choices = [(school.id, school.title) for school in School.query.all()]
     return render_template(_j.edit, form=userform, **properties)
 
 
@@ -126,13 +124,13 @@ def update(id):
     """
     linkage = db.get_or_404(Linkage, id)
     form = EditForm(formdata=request.form, obj=linkage)
-    if form.validate_on_submit():
-        form.populate_obj(linkage)
-        db.session.commit()
-        flash(f"'{ linkage.title}' updated")
-        return redirect(_to.show(id=id))
-    else:
-        flash("Error in form validation", "danger")
+    #if form.validate_on_submit():
+    form.populate_obj(linkage)
+    db.session.commit()
+    flash(f"'{ linkage.title}' updated")
+    return redirect(_to.show(id=id))
+    #else:
+        #flash("Error in form validation", "danger")
 
 
 @bp.route("/<int:id>/delete", methods=["POST", "DELETE"])

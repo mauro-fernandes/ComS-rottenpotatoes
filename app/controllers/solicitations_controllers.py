@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from wtforms import StringField, SubmitField, SelectField, IntegerField
 from flask_wtf import FlaskForm
-from wtforms.validators import InputRequired, NumberRange
+from wtforms.validators import ValidationError, InputRequired, NumberRange
 
-from ..models import Solicitation, School
+from ..models import Solicitation, School, User
 
 bp_name = "solicitations"
 
@@ -26,6 +26,7 @@ class _to:
     show = __to("show")
     edit = __to("edit")
     delete = __to("delete")
+    new = __to("new")
 
 
 class _j:
@@ -52,24 +53,11 @@ class EditForm(FlaskForm):
     rating = StringField("rating")
     description = StringField("description")
     
-    '''
-    @School.query.all()
-    def load_school(school_id):
-        return School.query.get(int(school_id))
-    from ..models import School
-    school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()])
-    '''
-    
-    school_id = StringField("school_id", validators=[InputRequired()])
-    student_id = StringField("student_id", validators=[InputRequired()])
+    school_id = SelectField("school", choices=[], validators=[InputRequired()])
+    student_id = SelectField("student", choices=[], validators=[InputRequired()])
     status = SelectField("Status", choices=[(True, 'Accepted'), (False, 'Rejected'), (False, 'Needs send docs)')], coerce=bool)   
     comments = StringField("comments")
     
-    # with app.webapp.app_context():
-    #     school = School.query.all()
-    #     student = Student.query.all()
-    # student = StringField("student")
-    # school = StringField(f"school: Put{school.id} for {school.title}")
     
     submit = SubmitField("Submit")
 
@@ -81,6 +69,9 @@ def new():
     :return: render create template
     """
     form = EditForm()
+    form.student_id.choices = [(user.id) for user in User.query.filter_by(is_student=True).all()]
+    form.school_id.choices = [(school.id) for school in School.query.all()]
+    
     return render_template(_j.new, form=form, **properties)
 
 
@@ -91,15 +82,17 @@ def create():
     :return: redirect to view new entity
     """
     form = EditForm(formdata=request.form)
-    if form.validate_on_submit():
-        newsolicitation = Solicitation()
-        form.populate_obj(newsolicitation)
-        db.session.add(newsolicitation)
-        db.session.commit()
-        flash(f"'{ newsolicitation.title}' created")
-        return redirect(_to.show(id=newsolicitation.id))
-    else:
-        flash("Error in form validation", "danger")
+    #if form.validate_on_submit():
+    newsolicitation = Solicitation()
+    form.populate_obj(newsolicitation)
+    db.session.add(newsolicitation)
+    db.session.commit()
+    flash(f"'{ newsolicitation.title}' created")
+    return redirect(_to.show(id=newsolicitation.id))
+    #else:
+        #print("saida 2")
+        #flash("Error in form validation", "danger")
+        #return redirect(_to.index())
 
 
 @bp.route("/<int:id>/show", methods=["GET"])
@@ -120,6 +113,8 @@ def edit(id):
     """
     solicitation = db.get_or_404(Solicitation, id)
     userform = EditForm(formdata=request.form, obj=solicitation)
+    userform.student_id.choices = [(user.id, user.username) for user in User.query.filter_by(is_student=True).all()]
+    userform.school_id.choices = [(school.id, school.title) for school in School.query.all()]
     return render_template(_j.edit, form=userform, **properties)
 
 
@@ -132,13 +127,14 @@ def update(id):
     """
     solicitation = db.get_or_404(Solicitation, id)
     form = EditForm(formdata=request.form, obj=solicitation)
-    if form.validate_on_submit():
-        form.populate_obj(solicitation)
-        db.session.commit()
-        flash(f"'{ solicitation.title}' updated")
-        return redirect(_to.show(id=id))
-    else:
-        flash("Error in form validation", "danger")
+    #if form.validate_on_submit():
+    form.populate_obj(solicitation)
+    db.session.commit()
+    flash(f"'{ solicitation.title}' updated")
+    return redirect(_to.show(id=id))
+    #else:
+        #flash("Error in form validation", "danger")
+        #return redirect(_to.index())
 
 
 @bp.route("/<int:id>/delete", methods=["POST", "DELETE"])
