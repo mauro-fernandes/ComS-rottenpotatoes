@@ -47,12 +47,11 @@ def index():
 
 
 class EditForm(FlaskForm):
-    title = StringField("title", validators=[InputRequired()])
-    #professor = StringField("professor")
-    rating = StringField("rating")
-    description = StringField("description")
-    release_date = StringField("release_date")
-    submit = SubmitField("Submit")
+    title = StringField("Nome", validators=[InputRequired()])
+    #rating = StringField("rating")
+    description = StringField("Descrição")
+    #release_date = StringField("release_date")
+    submit = SubmitField("Enviar")
     
 
 
