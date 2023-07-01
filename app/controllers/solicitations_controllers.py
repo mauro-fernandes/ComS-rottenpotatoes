@@ -48,9 +48,9 @@ def index():
 
 
 class EditForm(FlaskForm):
-    title = StringField("title", validators=[InputRequired()])
-    rating = StringField("rating")
-    description = StringField("description")
+    title = StringField("Titulo", validators=[InputRequired()])
+    rating = StringField("Avaliação")
+    description = StringField("Descrição")
     
     '''
     @School.query.all()
@@ -60,10 +60,10 @@ class EditForm(FlaskForm):
     school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()])
     '''
     
-    school_id = StringField("school_id", validators=[InputRequired()])
-    student_id = StringField("student_id", validators=[InputRequired()])
-    status = SelectField("Status", choices=[(True, 'Accepted'), (False, 'Rejected'), (False, 'Needs send docs)')], coerce=bool)   
-    comments = StringField("comments")
+    school_id = StringField("ID Escola", validators=[InputRequired()])
+    student_id = StringField("ID Estudante", validators=[InputRequired()])
+    status = SelectField("Status", choices=[(True, 'Aceito'), (False, 'Rejeitado'), (False, 'Documentos pendentes')], coerce=bool)   
+    comments = StringField("Comentários")
     
     # with app.webapp.app_context():
     #     school = School.query.all()
@@ -71,7 +71,7 @@ class EditForm(FlaskForm):
     # student = StringField("student")
     # school = StringField(f"school: Put{school.id} for {school.title}")
     
-    submit = SubmitField("Submit")
+    submit = SubmitField("Enviar!")
 
 
 @bp.route("/new", methods=["GET"])
@@ -138,7 +138,7 @@ def update(id):
         flash(f"'{ solicitation.title}' updated")
         return redirect(_to.show(id=id))
     else:
-        flash("Error in form validation", "danger")
+        flash("Erro na validação de formulário!", "danger")
 
 
 @bp.route("/<int:id>/delete", methods=["POST", "DELETE"])

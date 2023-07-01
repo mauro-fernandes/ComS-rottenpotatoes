@@ -48,11 +48,11 @@ def index():
 
 
 class EditForm(FlaskForm):
-    username = StringField(u"Username", validators=[InputRequired()])
-    is_student = BooleanField("student?", )
+    username = StringField(u"Nome de Usuário", validators=[InputRequired()])
+    is_student = BooleanField("Estudante?", )
     #is_student = SelectField("É estudante?", choices=[(True, 'Sim'), (False, 'Não')], coerce=bool)
     
-    submit = SubmitField("Submit")
+    submit = SubmitField("Enviar!")
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
