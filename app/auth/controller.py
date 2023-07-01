@@ -45,12 +45,12 @@ def login():
             user = User.query.filter_by(username=form.username.data).first()
             if user is None:
                 # In production, it is recommended to use a generic message
-                flash("User not found", "danger")
+                flash("Usuário não encontrado", "danger")
             elif check_password_hash(user.pwd, form.password.data):
                 login_user(user)
                 return redirect(url_for("main.index"))
             else:
-                flash("Invalid Username or password!", "danger")
+                flash("Nome de usuário ou password inválidos!", "danger")
         except Exception as e:
             flash(e, "danger")
 
@@ -80,7 +80,7 @@ def register():
 
             db.session.add(newuser)
             db.session.commit()
-            flash(f"Account Succesfully created", "success")
+            flash(f"Conta criada com sucesso", "success")
             return redirect(url_for("login"))
 
         except InvalidRequestError:
@@ -88,7 +88,7 @@ def register():
             flash(f"Something went wrong!", "danger")
         except IntegrityError:
             db.session.rollback()
-            flash(f"User already exists!.", "warning")
+            flash(f"Usuário já existente!", "warning")
         except DataError:
             db.session.rollback()
             flash(f"Invalid Entry", "warning")

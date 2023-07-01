@@ -14,18 +14,18 @@ class login_form(FlaskForm):
     username = StringField(validators=[InputRequired()])
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=72)])
     # Placeholder labels to enable form rendering
-    submit_button = SubmitField("Log in")
+    submit_button = SubmitField("Entrar")
 
 
 class Register_form(FlaskForm):
     username = StringField(
         validators=[
             InputRequired(),
-            Length(3, 20, message="Please provide a valid name"),
+            Length(3, 20, message="Por favor forneça um nome válido"),
             Regexp(
                 "^[A-Za-z][A-Za-z0-9_.]*$",
                 0,
-                "Usernames must only have letters, numbers, dots or underscores",
+                "Nomes de usuário devem conter apenas letras, números, pontos ou underscores",
             ),
         ]
     )
@@ -35,15 +35,15 @@ class Register_form(FlaskForm):
         validators=[
             InputRequired(),
             Length(8, 72),
-            EqualTo("password", message="Passwords must match !"),
+            EqualTo("password", message="Passwords devem coincidir !"),
         ]
     )
-    submit_button = SubmitField("Sign Up")
+    submit_button = SubmitField("Cadastrar")
 
     def validate_email(self, email):
         if User.query.filter_by(email=email.data).first():
-            raise ValidationError("Email already registered!")
+            raise ValidationError("Email já registrado!")
 
     def validate_uname(self, uname):
         if User.query.filter_by(username=uname.data).first():
-            raise ValidationError("Username already taken!")
+            raise ValidationError("Username já utilizado!")

@@ -179,11 +179,11 @@
               {{ render_nav_item('auth.profile', (current_user.username|upper)) }}
             </div>
             <div class="nav_bar_box ml-2">
-              {{ render_nav_item('auth.logout', 'Logout') }}
+              {{ render_nav_item('auth.logout', 'Sair') }}
             </div>
             {% elif not current_user.is_authenticated %}
             <div class="nav_bar_box">
-              {{ render_nav_item('auth.login', 'Login') }}
+              {{ render_nav_item('auth.login', 'Entrar') }}
             </div>
             {% endif %}
           </ul>
