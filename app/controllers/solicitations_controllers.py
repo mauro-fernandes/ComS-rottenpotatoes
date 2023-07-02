@@ -69,8 +69,8 @@ def new():
     :return: render create template
     """
     form = EditForm()
-    form.student_id.choices = [(user.id) for user in User.query.filter_by(is_student=True).all()]
-    form.school_id.choices = [(school.id) for school in School.query.all()]
+    form.student_id.choices = [(user.id, user.name) for user in User.query.filter_by(is_student=True).all()]
+    form.school_id.choices = [(school.id, school.title) for school in School.query.all()]
     
     return render_template(_j.new, form=form, **properties)
 
