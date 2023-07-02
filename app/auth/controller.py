@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for, session
+from flask import render_template, redirect, flash, url_for, session, request
 
 from datetime import timedelta
 from sqlalchemy.exc import (
@@ -124,6 +124,8 @@ class PhotoForm(FlaskForm):
 @bp.route('/docs/', methods=['GET', 'POST'], strict_slashes=False)      # TODO: fix renderization to upload docs
 def upload():
     form = PhotoForm()
+    if request.method == 'POST' and 'photo' in request.files:
+        print('form validated', request.form.get('photos'))
 
     if form.validate_on_submit():
         f = form.photo.data
@@ -137,6 +139,17 @@ def upload():
     docs_sent = db.session.query(User).filter(User.id == 1).first()
     
     return render_template("users/docs.jinja2", form=form, **properties) #, entities=docs_sent) #, docs_sent=docs_sent) ???
+
+
+@bp.route("/test", methods=("GET", "POST"), strict_slashes=False)
+def test_():
+    """
+    Test page.
+    :return: test page.
+    """
+    print("url reachable: ok")
+    
+    return render_template("test_mfa.jinja2")
 
 
 @bp.route("/logout")
