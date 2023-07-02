@@ -52,8 +52,8 @@ class EditForm(FlaskForm):
     rating = StringField("rating")
     description = StringField("description")
         
-    school_id = SelectField("school_id", choices=[])
-    student_id = SelectField("student_id", choices=[])
+    school_id = SelectField("school", choices=[])
+    student_id = SelectField("student", choices=[])
     active = SelectField("Está ativo?", choices=[(1, 'Sim'), (0, 'Não')])
     comments = StringField("comments")
     
