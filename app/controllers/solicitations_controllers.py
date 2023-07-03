@@ -53,21 +53,13 @@ class EditForm(FlaskForm):
     rating = StringField("Avaliação")
     description = StringField("Descrição")
     
-    '''
-    @School.query.all()
-    def load_school(school_id):
-        return School.query.get(int(school_id))
-    from ..models import School
-    school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()])
-    '''
-    
-    school_id = StringField("ID Escola", validators=[InputRequired()])
-    student_id = StringField("ID Estudante", validators=[InputRequired()])
+    school_id = SelectField("ID Escola",choices=[], validators=[InputRequired()])
+    student_id = SelectField("ID Estudante",choices=[], validators=[InputRequired()])
+    # school_id = StringField("ID Escola", validators=[InputRequired()])
+    # student_id = StringField("ID Estudante", validators=[InputRequired()])
     status = SelectField("Status", choices=[(True, 'Aceito'), (False, 'Rejeitado'), (False, 'Documentos pendentes')], coerce=bool)   
     comments = StringField("Comentários")
 
-    
-    
     submit = SubmitField("Enviar!")
 
 
@@ -136,9 +128,8 @@ def update(id):
     """
     solicitation = db.get_or_404(Solicitation, id)
     form = EditForm(formdata=request.form, obj=solicitation)
-<
     #if form.validate_on_submit():
-    form.populate_obj(solicitation)
+    form.populate_obj(solicitation) 
     db.session.commit()
     flash(f"'{ solicitation.title}' updated")
     return redirect(_to.show(id=id))

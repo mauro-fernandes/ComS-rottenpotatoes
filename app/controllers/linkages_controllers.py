@@ -52,10 +52,9 @@ class EditForm(FlaskForm):
     rating = StringField("Comentários")
     description = StringField("Descrição")
     
-    #from ..models import School
-    #school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()], coerce=int)
-    school_id = StringField("ID Escola", validators=[InputRequired()])
-    student_id = StringField("Estudante", validators=[InputRequired()])
+    school_id = SelectField("school", choices=[], coerce=int)
+    #school_id = StringField("ID Escola", validators=[InputRequired()])
+    student_id = SelectField("Estudante", choices=[], validators=[InputRequired()])
 
     active = SelectField("Está ativo?", choices=[(1, 'Sim'), (0, 'Não')])
     comments = StringField("comments")
