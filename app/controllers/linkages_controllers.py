@@ -14,7 +14,7 @@ import app
 properties = {
     "entity_name": "linkage",
     "collection_name": "Vínculos",
-    "list_fields": ["id", "student_id", "school_id", "active", "title", "comments", "rating", "created_at", "updated_at"],
+    "list_fields": ["id", "student_id", "school_id", "active", "title", "comments", "rating", "created_at", "updated_at","nome"],
 }
 
 

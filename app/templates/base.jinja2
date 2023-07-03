@@ -172,7 +172,7 @@
           </ul>
         </div>
 
-
+        <!--
         <div>
           <ul class="navbar-nav collapse navbar-collapse me-0" id="navbarSupportedContent">
             <div class="nav_bar_box ms-0">
@@ -188,6 +188,32 @@
             {% endif %}
           </ul>
         </div>
+
+      -->
+      <div>
+  <ul class="navbar-nav collapse navbar-collapse me-0" id="navbarSupportedContent">
+    <div class="nav_bar_box ms-0">
+      {% if current_user.is_authenticated %}
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user"></i> {{ current_user.username|upper }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="profileDropdown">
+            <a class="dropdown-item" href="{{ url_for('auth.profile'), (current_user.username|upper) }}"></a>
+            <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sair</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </ul>
+</div>
+
+<!-- Certifique-se de incluir os arquivos CSS e JS do Bootstrap no seu HTML -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
 
 

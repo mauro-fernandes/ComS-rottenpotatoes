@@ -14,7 +14,7 @@ import app
 properties = {
     "entity_name": "solicitation",
     "collection_name": "Solicitações",
-    "list_fields": ["id", "student_id", "school_id", "status", "title", "comments", "created_at", "updated_at"],
+    "list_fields": ["id", "student_id", "school_id", "status", "title", "comments", "created_at", "updated_at","nome"],
 }
 
 

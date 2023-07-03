@@ -54,7 +54,7 @@ class EditForm(FlaskForm):
     is_student = BooleanField("É estudante?", default="checked")
     #is_student = SelectField("É estudante?", choices=[('true', 'Sim'), ('false', 'Não')], coerce=bool)
     
-    submit = SubmitField("enviar")
+    submit = SubmitField("Enviar")
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
@@ -88,7 +88,7 @@ def do_edit(id):
         db.session.commit()
         return redirect(_to.index())
     else:
-        flash("Error in form validation", "danger")
+        flash("Erro na validação do formulário", "danger")
 
 
 @bp.route("/<int:id>/delete", methods=["POST"])
@@ -100,5 +100,5 @@ def delete(id):
     obj = User.query.filter_by(id=id).one()
     db.session.delete(obj)
     db.session.commit()
-    flash("Entry deleted")
+    flash("Entrada deletada")
     return redirect(_to.index())
