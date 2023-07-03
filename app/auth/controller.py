@@ -45,12 +45,14 @@ def login():
             user = User.query.filter_by(username=form.username.data).first()
             if user is None:
                 # In production, it is recommended to use a generic message
-                flash("Usuário não encontrado", "danger")
+                flash("Usuário não encontrado! Caso não tenha cadastro, registre-se!", "danger")
+
             elif check_password_hash(user.pwd, form.password.data):
                 login_user(user)
                 return redirect(url_for("main.index"))
             else:
-                flash("Nome de usuário ou password inválidos!", "danger")
+                flash("Nome ou senha inválido!", "danger")
+
         except Exception as e:
             flash(e, "danger")
 
@@ -80,27 +82,29 @@ def register():
 
             db.session.add(newuser)
             db.session.commit()
-            flash(f"Conta criada com sucesso", "success")
+            flash(f"Conta criada com sucesso!", "success")
+
             return redirect(url_for("login"))
 
         except InvalidRequestError:
             db.session.rollback()
-            flash(f"Something went wrong!", "danger")
+            flash(f"Algo deu errado!", "danger")
         except IntegrityError:
             db.session.rollback()
-            flash(f"Usuário já existente!", "warning")
+            flash(f"Usuário ja existe", "warning")
+
         except DataError:
             db.session.rollback()
-            flash(f"Invalid Entry", "warning")
+            flash(f"Entrada inválida!", "warning")
         except InterfaceError:
             db.session.rollback()
-            flash(f"Error connecting to the database", "danger")
+            flash(f"Erro ao se conectar a base de dados!", "danger")
         except DatabaseError:
             db.session.rollback()
-            flash(f"Error connecting to the database", "danger")
+            flash(f"Erro ao se conectar a base de dados!", "danger")
         except BuildError:
             db.session.rollback()
-            flash(f"An error occured !", "danger")
+            flash(f"Ocorreu um erro!", "danger")
     return render_template(
         "auth/register.jinja2",
         form=form,
@@ -131,7 +135,7 @@ def upload():
         f = form.photo.data
         filename = secure_filename(f.filename)
         f.save(os.path.join(
-            app.instance_path, 'photos', filename
+            app.instance_path, 'photo', filename
         ))
         submit = SubmitField('Upload')
         return redirect(url_for('main'))

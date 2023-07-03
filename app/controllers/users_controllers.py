@@ -48,6 +48,7 @@ def index():
 
 
 class EditForm(FlaskForm):
+
     name = StringField("Nome", validators=[InputRequired()])
     username = StringField(u"Nome de usuário", validators=[InputRequired()])
     is_student = BooleanField("É estudante?", default="checked")

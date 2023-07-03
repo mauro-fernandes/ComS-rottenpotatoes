@@ -48,16 +48,19 @@ def index():
 
 
 class EditForm(FlaskForm):
-    title = StringField("title", validators=[InputRequired()])
-    rating = StringField("rating")
-    description = StringField("description")
-        
-    school_id = SelectField("school", choices=[])
-    student_id = SelectField("student", choices=[])
+    title = StringField("Titulo", validators=[InputRequired()])
+    rating = StringField("Comentários")
+    description = StringField("Descrição")
+    
+    #from ..models import School
+    #school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()], coerce=int)
+    school_id = StringField("ID Escola", validators=[InputRequired()])
+    student_id = StringField("Estudante", validators=[InputRequired()])
+
     active = SelectField("Está ativo?", choices=[(1, 'Sim'), (0, 'Não')])
     comments = StringField("comments")
     
-    submit = SubmitField("Submit")
+    submit = SubmitField("Enviar!")
 
 
 @bp.route("/new", methods=["GET"])

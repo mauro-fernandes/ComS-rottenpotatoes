@@ -49,17 +49,26 @@ def index():
 
 
 class EditForm(FlaskForm):
-    title = StringField("title", validators=[InputRequired()])
-    rating = StringField("rating")
-    description = StringField("description")
+    title = StringField("Titulo", validators=[InputRequired()])
+    rating = StringField("Avaliação")
+    description = StringField("Descrição")
     
-    school_id = SelectField("school", choices=[], validators=[InputRequired()])
-    student_id = SelectField("student", choices=[], validators=[InputRequired()])
-    status = SelectField("Status", choices=[(True, 'Accepted'), (False, 'Rejected'), (False, 'Needs send docs)')], coerce=bool)   
-    comments = StringField("comments")
+    '''
+    @School.query.all()
+    def load_school(school_id):
+        return School.query.get(int(school_id))
+    from ..models import School
+    school_id = SelectField("school", choices=[(school.id, school.title) for school in School.query.all()])
+    '''
+    
+    school_id = StringField("ID Escola", validators=[InputRequired()])
+    student_id = StringField("ID Estudante", validators=[InputRequired()])
+    status = SelectField("Status", choices=[(True, 'Aceito'), (False, 'Rejeitado'), (False, 'Documentos pendentes')], coerce=bool)   
+    comments = StringField("Comentários")
+
     
     
-    submit = SubmitField("Submit")
+    submit = SubmitField("Enviar!")
 
 
 @bp.route("/new", methods=["GET"])
@@ -127,6 +136,7 @@ def update(id):
     """
     solicitation = db.get_or_404(Solicitation, id)
     form = EditForm(formdata=request.form, obj=solicitation)
+<
     #if form.validate_on_submit():
     form.populate_obj(solicitation)
     db.session.commit()
