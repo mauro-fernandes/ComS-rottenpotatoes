@@ -15,7 +15,8 @@ class login_form(FlaskForm):
     username = StringField(u"Nome de Usuário", validators=[InputRequired()])
     password = PasswordField(u"Senha", validators=[InputRequired(), Length(min=8, max=72)])
     # Placeholder labels to enable form rendering
-    submit_button = SubmitField("Logar")
+    submit_button = SubmitField("Entrar")
+
 
 
 class Register_form(FlaskForm):
@@ -27,6 +28,7 @@ class Register_form(FlaskForm):
                 "^[A-Za-z][A-Za-z0-9_.]*$",
                 0,
                 "Nome de usuário de ter apenas letras, números, pontos ou underline",
+
             ),
         ]
     )

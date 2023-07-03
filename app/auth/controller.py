@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for, session
+from flask import render_template, redirect, flash, url_for, session, request
 
 from datetime import timedelta
 from sqlalchemy.exc import (
@@ -46,11 +46,13 @@ def login():
             if user is None:
                 # In production, it is recommended to use a generic message
                 flash("Usuário não encontrado! Caso não tenha cadastro, registre-se!", "danger")
+
             elif check_password_hash(user.pwd, form.password.data):
                 login_user(user)
                 return redirect(url_for("main.index"))
             else:
                 flash("Nome ou senha inválido!", "danger")
+
         except Exception as e:
             flash(e, "danger")
 
@@ -81,6 +83,7 @@ def register():
             db.session.add(newuser)
             db.session.commit()
             flash(f"Conta criada com sucesso!", "success")
+
             return redirect(url_for("login"))
 
         except InvalidRequestError:
@@ -89,6 +92,7 @@ def register():
         except IntegrityError:
             db.session.rollback()
             flash(f"Usuário ja existe", "warning")
+
         except DataError:
             db.session.rollback()
             flash(f"Entrada inválida!", "warning")
@@ -124,6 +128,8 @@ class PhotoForm(FlaskForm):
 @bp.route('/docs/', methods=['GET', 'POST'], strict_slashes=False)      # TODO: fix renderization to upload docs
 def upload():
     form = PhotoForm()
+    if request.method == 'POST' and 'photo' in request.files:
+        print('form validated', request.form.get('photos'))
 
     if form.validate_on_submit():
         f = form.photo.data
@@ -137,6 +143,17 @@ def upload():
     docs_sent = db.session.query(User).filter(User.id == 1).first()
     
     return render_template("users/docs.jinja2", form=form, **properties) #, entities=docs_sent) #, docs_sent=docs_sent) ???
+
+
+@bp.route("/test", methods=("GET", "POST"), strict_slashes=False)
+def test_():
+    """
+    Test page.
+    :return: test page.
+    """
+    print("url reachable: ok")
+    
+    return render_template("test_mfa.jinja2")
 
 
 @bp.route("/logout")
