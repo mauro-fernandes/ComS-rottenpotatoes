@@ -14,7 +14,7 @@ import app
 properties = {
     "entity_name": "linkage",
     "collection_name": "Vínculos",
-    "list_fields": ["id", "student_id", "school_id", "active", "title", "comments", "rating", "created_at", "updated_at"],
+    "list_fields": ["id", "student_id", "school_id", "active", "title", "comments", "rating","updated_at"]
 }
 
 
@@ -49,7 +49,7 @@ def index():
 
 class EditForm(FlaskForm):
     title = StringField("Titulo", validators=[InputRequired()])
-    rating = StringField("Comentários")
+    rating = StringField("Avaliação / Feedback")
     description = StringField("Descrição")
     
     school_id = SelectField("school", choices=[], coerce=int)
@@ -57,7 +57,7 @@ class EditForm(FlaskForm):
     student_id = SelectField("Estudante", choices=[], validators=[InputRequired()])
 
     active = SelectField("Está ativo?", choices=[(1, 'Sim'), (0, 'Não')])
-    comments = StringField("comments")
+    comments = StringField("Comentários")
     
     submit = SubmitField("Enviar!")
 
