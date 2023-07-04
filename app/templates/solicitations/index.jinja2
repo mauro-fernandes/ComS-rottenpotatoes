@@ -70,9 +70,9 @@
                         {% if entity[field] == 1 %}
                             <td>APROVADO</td>
                         {% elif entity[field] == 2 %}
-                            <td>reprovado</td>
+                            <td>não aceito</td>
                         {% else %}
-                            <td>falta docs</td>
+                            <td>docs pendentes</td>
                         {% endif %}
                 {% else %}
                 <td>{{ entity[field] }}</td>
