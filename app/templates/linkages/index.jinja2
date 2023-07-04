@@ -44,15 +44,15 @@
                     
                     <th>Ativo</th>
                     
-                    <th>Titulo</th>
+                    <th>Tipo do vínculo</th>
                     
                     <th>Comentários</th>
                     
                     <th>Avaliação</th>
                     
-                    <th>Criado em</th>
+                    <!--th>Criado em</th-->
                     
-                    <th>Atualiazado em</th>
+                    <th>Atualizado em</th>
                     
                     <th>Opções</th>
             </tr>
@@ -61,7 +61,15 @@
             {% for entity in entities %}
             <tr>
                 {% for field in list_fields %}
+                {% if field == 'active' %}
+                        {% if entity[field] == 1 %}
+                            <td>Sim</td>
+                        {% else %}
+                            <td>Não</td>
+                        {% endif %}
+                {% else %}
                 <td>{{ entity[field] }}</td>
+                {% endif%}
                 {% endfor %}
                 <td>
                     <a class="btn" href="{{ url_for('linkages.show', id=entity.id) }}" title="View"> {{
