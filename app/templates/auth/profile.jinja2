@@ -11,19 +11,16 @@
 <div class="mb-3">
         {% if current_user.is_student==False %}
 Logado com privilégios de Administrador, lembre-se de que com grandes poderes vem grandes responsabilidades!            
-        {% endif %}
+	{% endif %}
         {% if current_user.is_student!=False %}
 Bem vindo aluno, na ComS você finalmente vai conseguir seu estágio de prática pedagógica!
-        {% endif %}
+	{% endif %}
 
 </div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
-
-
-{% endblock %}
 
 
 {% endblock %}

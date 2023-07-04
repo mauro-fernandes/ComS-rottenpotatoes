@@ -49,16 +49,16 @@ def index():
 
 
 class EditForm(FlaskForm):
-    title = StringField("Titulo", validators=[InputRequired()])
-    rating = StringField("Avaliação")
-    description = StringField("Descrição")
+    title = StringField("Descrição Pedido", validators=[InputRequired()])
+    # rating = StringField("Avaliação")
+    description = StringField("Data Pedido")
     
-    school_id = SelectField("ID Escola",choices=[], validators=[InputRequired()])
-    student_id = SelectField("ID Estudante",choices=[], validators=[InputRequired()])
+    school_id = SelectField("Escola",choices=[], validators=[InputRequired()])
+    student_id = SelectField("Estudante",choices=[], validators=[InputRequired()])
     # school_id = StringField("ID Escola", validators=[InputRequired()])
     # student_id = StringField("ID Estudante", validators=[InputRequired()])
-    status = SelectField("Status", choices=[(True, 'Aceito'), (False, 'Rejeitado'), (False, 'Documentos pendentes')], coerce=bool)   
-    comments = StringField("Comentários")
+    # status = SelectField("Status", choices=[(True, 'Aceito'), (False, 'Rejeitado'), (False, 'Documentos pendentes')], coerce=bool)   
+    comments = StringField("Informações Adicionais")
 
     submit = SubmitField("Enviar!")
 
