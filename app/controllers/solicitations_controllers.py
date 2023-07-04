@@ -14,7 +14,7 @@ import app
 properties = {
     "entity_name": "solicitation",
     "collection_name": "Solicitações",
-    "list_fields": ["id", "student_id", "school_id", "status", "title", "comments", "created_at", "updated_at"],
+    "list_fields": ["id", "student_id", "school_id", "approval", "title", "comments", "created_at", "updated_at"],
 }
 
 
@@ -57,7 +57,7 @@ class EditForm(FlaskForm):
     student_id = SelectField("Estudante",choices=[], validators=[InputRequired()])
     # school_id = StringField("ID Escola", validators=[InputRequired()])
     # student_id = StringField("ID Estudante", validators=[InputRequired()])
-    # status = SelectField("Status", choices=[(True, 'Aceito'), (False, 'Rejeitado'), (False, 'Documentos pendentes')], coerce=bool)   
+    approval = SelectField("Status", choices=[(1, 'Aceito'), (2, 'Rejeitado'), (3, 'Documentos pendentes')])   
     comments = StringField("Informações Adicionais")
 
     submit = SubmitField("Enviar!")
