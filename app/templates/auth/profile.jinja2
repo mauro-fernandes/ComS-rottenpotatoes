@@ -9,13 +9,21 @@
 <h1>Olá, {{ current_user.username}}! Esse é seu perfil</h1>
 
 <div class="mb-3">
-    <label for="formFileDisabled" class="form-label d-inline-flex p-2">Exemplo de Entrada de arquivo desabilitada</label>
-    <input class="form-control" type="file" id="formFileDisabled" disabled>
-  </div>
+        {% if current_user.is_student==False %}
+Logado com privilégios de Administrador, lembre-se de que com grandes poderes vem grandes responsabilidades!            
+        {% endif %}
+        {% if current_user.is_student!=False %}
+Bem vindo aluno, na ComS você finalmente vai conseguir seu estágio de prática pedagógica!
+        {% endif %}
+
+</div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
+
+
+{% endblock %}
 
 
 {% endblock %}
