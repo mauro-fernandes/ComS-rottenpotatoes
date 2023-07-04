@@ -66,7 +66,17 @@
             {% for entity in entities %}
             <tr>
                 {% for field in list_fields %}
+                {% if field == 'approval' %}
+                        {% if entity[field] == 1 %}
+                            <td>APROVADO</td>
+                        {% elif entity[field] == 2 %}
+                            <td>reprovado</td>
+                        {% else %}
+                            <td>falta docs</td>
+                        {% endif %}
+                {% else %}
                 <td>{{ entity[field] }}</td>
+                {% endif%}
                 {% endfor %}
                 <td>
                     <a class="btn" href="{{ url_for('solicitations.show', id=entity.id) }}" title="View"> {{
