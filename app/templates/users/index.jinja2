@@ -52,15 +52,23 @@
             {% for entity in entities %}
             <tr>
                 {% for field in list_fields %}
-                <td>{{ entity[field] }}</td>
+                    {% if field == 'is_student' %}
+                        {% if entity[field] == True %}
+                            <td>Sim</td>
+                        {% else %}
+                            <td>Não</td>
+                        {% endif %}
+                    {% else %}
+                    <td>{{ entity[field] }}</td>
+                    {% endif %}
                 {% endfor %}
-                <td>
+                    <td>
                     <a class="btn" href="{{ url_for('users.edit', id=entity.id) }}" data-toggle="tooltip"
-                        data-placement="top" title="Tooltip on top"><i title="Edit"> {{
+                        data-placement="top" title="Tooltip on top"><i title="Editar"> {{
                             render_icon('pencil-square') }}</i></a>
                     <a  href="#" class="btn clickForActionToConfirm" entity-id="{{entity.id}}" data-bs-toggle="modal"
                         data-bs-target="#modalConfirm" data-entity-reference="{{entity.username}}"
-                        data-action="{{url_for('users.delete', id=entity.id)}}" data-action-text="delete" title="delete">
+                        data-action="{{url_for('users.delete', id=entity.id)}}" data-action-text="delete" title="deletar">
                         {{render_icon('x-circle') }}
                     </a>
                 </td>
