@@ -14,11 +14,11 @@ class School(db.Model):
     #professor = db.relationship("User", backref="school", lazy=True)
     
     
-    release_date = db.Column(db.DateTime)
-    created_at = db.Column(db.DateTime, nullable=False, default=func.now())
-    updated_at = db.Column(
-        db.DateTime, nullable=False, default=func.now(), onupdate=func.now()
-        )
+    #release_date = db.Column(db.DateTime)
+    #created_at = db.Column(db.DateTime, nullable=False, default=func.now())
+    #updated_at = db.Column(
+    #    db.DateTime, nullable=False, default=func.now(), onupdate=func.now()
+    #    )
 
     def __repr__(self):
         return f"<School id = {self.id}; name = {self.title}>"

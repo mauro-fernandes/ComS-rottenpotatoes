@@ -2,7 +2,7 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/component_confirm_modal.jinja2' import confirmModalMacro, confirmModalScript %}
 
-{% block title %}Schools{% endblock %}
+{% block title %}Escolas{% endblock %}
 {% block head %}
 {{ super() }}
 <style type="text/css">
@@ -18,12 +18,14 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Gerenciar {{collection_name}}</h1>
+                <h1>Gerenciar Escolas</h1>
             </div>
             <div class="col-sm-6">
                 {% if current_user.is_authenticated %}
+		{% if current_user.is_student==False %}
                 <a href="{{ url_for('schools.new') }}" class="btn btn-success">
                     {{render_icon('file-plus') }} <span>Adicionar</span></a>
+                {% endif %}
                 {% endif %}
             </div>
         </div>
