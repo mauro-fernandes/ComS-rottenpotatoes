@@ -1,17 +1,24 @@
 {% extends 'base.jinja2' %}
 {% from 'bootstrap5/form.html' import render_form %}
 
-{% block title %}{{current_user.username}} Profile{% endblock %}
+{% block title %}{{current_user.username}} Perfil{% endblock %}
 
 
 {% block content %}
 
-<h1>Hello, {{ current_user.username}}! This is your profile</h1>
+<h1>Hello, {{ current_user.username}}! Bem vindo ao seu perfil</h1>
 
 <div class="mb-3">
-    <label for="formFileDisabled" class="form-label d-inline-flex p-2">Disabled file input example</label>
-    <input class="form-control" type="file" id="formFileDisabled" disabled>
-  </div>
+
+	Esse é o seu perfil, quando preenchido ele irá mostrar
+	suas qualificações para escolas buscando alunos para ministrar
+	estagio de pratica pedagógica na sua área de expertise.
+	Então o preencha com cuidado para obter as melhores oportunidades!
+</div>
+	<img src="../../static/img/blank-profile.webp" width="200" height="200">
+	<div>
+	Você ainda não possui foto de perfil, lembre-se de incluir uma quando enviar seus documentos.
+	</div>
 {% endblock %}
 
 {% block scripts %}

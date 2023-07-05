@@ -24,18 +24,19 @@
 
 <class="important">
     <p>
-
-        The Team says welcome and would like to show the news and the launch of this release...
+	Bem vindo ao ComS, a aplicação que vai garantir que você vai sair Com eStágio em pratica pedagógica!
     </p>
 
 
     {% if current_user.is_authenticated %}
+{% if current_user.is_student==False %}
     <h4>
         <a href="{{ url_for('schools.new') }}">Registrar Escola</a>
     </h4>
     <h4>
         <a href="{{ url_for('linkages.new') }}">Gravar vínculo de estudante-escola</a>
     </h4>
+    {% endif %}
     <h4>
         <a href="{{ url_for('solicitations.new') }}">Aplique para uma escola de seu interesse</a>
     </h4>
