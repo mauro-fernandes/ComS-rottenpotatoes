@@ -6,17 +6,12 @@
 
 {% block content %}
 
-<h1>Olá, {{ current_user.username}}! Esse é seu perfil</h1>
+<h1>Hello, {{ current_user.username}}! This is your profile</h1>
 
 <div class="mb-3">
-        {% if current_user.is_student==False %}
-Logado com privilégios de Administrador, lembre-se de que com grandes poderes vem grandes responsabilidades!            
-	{% endif %}
-        {% if current_user.is_student!=False %}
-Bem vindo aluno, na ComS você finalmente vai conseguir seu estágio de prática pedagógica!
-	{% endif %}
-
-</div>
+    <label for="formFileDisabled" class="form-label d-inline-flex p-2">Disabled file input example</label>
+    <input class="form-control" type="file" id="formFileDisabled" disabled>
+  </div>
 {% endblock %}
 
 {% block scripts %}

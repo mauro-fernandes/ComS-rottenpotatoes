@@ -11,42 +11,39 @@ from ..models import User
 
 class login_form(FlaskForm):
     # email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
-    #username = StringField(validators=[InputRequired()])
-    username = StringField(u"Nome de Usuário", validators=[InputRequired()])
-    password = PasswordField(u"Senha", validators=[InputRequired(), Length(min=8, max=72)])
+    username = StringField(validators=[InputRequired()])
+    password = PasswordField(validators=[InputRequired(), Length(min=8, max=72)])
     # Placeholder labels to enable form rendering
-    submit_button = SubmitField("Entrar")
-
+    submit_button = SubmitField("Log in")
 
 
 class Register_form(FlaskForm):
-    username = StringField(u"Nome de usuário",
+    username = StringField(
         validators=[
             InputRequired(),
-            Length(3, 20, message="Por favor forneça um nome válido!"),
+            Length(3, 20, message="Please provide a valid name"),
             Regexp(
                 "^[A-Za-z][A-Za-z0-9_.]*$",
                 0,
-                "Nome de usuário de ter apenas letras, números, pontos ou underline",
-
+                "Usernames must only have letters, numbers, dots or underscores",
             ),
         ]
     )
-    email = StringField(u"Email", validators=[InputRequired(), Email(), Length(1, 64)])
-    password = PasswordField(u"Senha",validators=[InputRequired(), Length(8, 72)])
-    confirm_password = PasswordField(u"Confirme a senha",
+    email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
+    password = PasswordField(validators=[InputRequired(), Length(8, 72)])
+    confirm_password = PasswordField(
         validators=[
             InputRequired(),
             Length(8, 72),
-            EqualTo("password", message="As senhas devem ser iguais!"),
+            EqualTo("password", message="Passwords must match !"),
         ]
     )
-    submit_button = SubmitField("Registrar!")
+    submit_button = SubmitField("Sign Up")
 
     def validate_email(self, email):
         if User.query.filter_by(email=email.data).first():
-            raise ValidationError("Email ja foi registrado!")
+            raise ValidationError("Email already registered!")
 
     def validate_uname(self, uname):
         if User.query.filter_by(username=uname.data).first():
-            raise ValidationError("Nome de usuário ja registado")
+            raise ValidationError("Username already taken!")

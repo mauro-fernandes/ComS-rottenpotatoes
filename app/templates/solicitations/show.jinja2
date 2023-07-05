@@ -10,19 +10,18 @@
 
 {% block content %}
 
-<h2> Detalhes sobre:<i>{{entity.title}}</i> </h2>
+<h2> Details about <i>{{entity.title}}</i> </h2>
 <ul id="details">
-    <li> Avaliação: {{entity.rating}}</li>
-    <li> Criado em: {{entity.release_date}}</li>
+    <li> Rating: {{entity.rating}}</li>
+    <li> Released on: {{entity.release_date}}</li>
 </ul>
 
 
-<h3> Descrição: </h3>
+<h3> Description: </h3>
 <p> {{ entity.description }} </p>
-<h3> Solicitações: </h3>
+<h3> Solicitations: </h3>
 <p> {{ entity.solicitations }} </p>
 
-<!--
 <div class="btn-group" role="group">
     <a href="{{ url_for('solicitations.index') }}" class="btn btn-primary">Back to List</a>
     {% if current_user.is_authenticated %}
@@ -31,19 +30,6 @@
         data-bs-target="#modalConfirm" data-entity-reference="{{entity.title}}"
         data-action="{{url_for('solicitations.destroy', id=entity.id)}}" data-action-text="delete">
         {{render_icon('x-circle') }} Delete
-    </a>
-    {% endif %}
-</div>
--->
-
-<div class="btn-group" role="group">
-    <a href="{{ url_for('solicitations.index') }}" class="btn btn-primary">Voltar para a lista</a>
-    {% if current_user.is_authenticated %}
-    <a href="{{ url_for('solicitations.edit', id=entity.id) }}" class="btn btn-secondary">Editar    </a>
-    <a href="#" class="clickForActionToConfirm btn btn-danger" entity-id="{{entity.id}}" data-bs-toggle="modal"
-        data-bs-target="#modalConfirm" data-entity-reference="{{entity.title}}"
-        data-action="{{url_for('solicitations.destroy', id=entity.id)}}" data-action-text="Deletar">
-        {{render_icon('x-circle') }} Deletar
     </a>
     {% endif %}
 </div>

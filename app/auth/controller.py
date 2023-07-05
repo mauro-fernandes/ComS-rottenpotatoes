@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for, session, request
+from flask import render_template, redirect, flash, url_for, session
 
 from datetime import timedelta
 from sqlalchemy.exc import (
@@ -45,14 +45,12 @@ def login():
             user = User.query.filter_by(username=form.username.data).first()
             if user is None:
                 # In production, it is recommended to use a generic message
-                flash("Usuário não encontrado! Caso não tenha cadastro, registre-se!", "danger")
-
+                flash("User not found", "danger")
             elif check_password_hash(user.pwd, form.password.data):
                 login_user(user)
                 return redirect(url_for("main.index"))
             else:
-                flash("Nome ou senha inválido!", "danger")
-
+                flash("Invalid Username or password!", "danger")
         except Exception as e:
             flash(e, "danger")
 
@@ -82,29 +80,27 @@ def register():
 
             db.session.add(newuser)
             db.session.commit()
-            flash(f"Conta criada com sucesso!", "success")
-
+            flash(f"Account Succesfully created", "success")
             return redirect(url_for("login"))
 
         except InvalidRequestError:
             db.session.rollback()
-            flash(f"Algo deu errado!", "danger")
+            flash(f"Something went wrong!", "danger")
         except IntegrityError:
             db.session.rollback()
-            flash(f"Usuário ja existe", "warning")
-
+            flash(f"User already exists!.", "warning")
         except DataError:
             db.session.rollback()
-            flash(f"Entrada inválida!", "warning")
+            flash(f"Invalid Entry", "warning")
         except InterfaceError:
             db.session.rollback()
-            flash(f"Erro ao se conectar a base de dados!", "danger")
+            flash(f"Error connecting to the database", "danger")
         except DatabaseError:
             db.session.rollback()
-            flash(f"Erro ao se conectar a base de dados!", "danger")
+            flash(f"Error connecting to the database", "danger")
         except BuildError:
             db.session.rollback()
-            flash(f"Ocorreu um erro!", "danger")
+            flash(f"An error occured !", "danger")
     return render_template(
         "auth/register.jinja2",
         form=form,
@@ -113,47 +109,25 @@ def register():
         btn_action="Register account",
     )
 
-# docs&Upload route/controllers ######################################################################
-
-properties = {                                          # TODO: finish this
-    "entity_name": "documento",
-    "collection_name": "documentos",
-    "list_fields": ["id", "student_id", "status", "title", "comments", "created_at", "updated_at"],
-}
-
+# docs/Upload route ######################################################################
 
 class PhotoForm(FlaskForm):
     photo = FileField(validators=[FileRequired()])
 
-@bp.route('/docs/', methods=['GET', 'POST'], strict_slashes=False)      # TODO: fix renderization to upload docs
+@bp.route('/docs/', methods=['GET', 'POST'], strict_slashes=False)
 def upload():
     form = PhotoForm()
-    if request.method == 'POST' and 'photo' in request.files:
-        print('form validated', request.form.get('photos'))
 
     if form.validate_on_submit():
         f = form.photo.data
         filename = secure_filename(f.filename)
         f.save(os.path.join(
-            app.instance_path, 'photo', filename
+            app.instance_path, 'photos', filename
         ))
         submit = SubmitField('Upload')
         return redirect(url_for('main'))
 
-    docs_sent = db.session.query(User).filter(User.id == 1).first()
-    
-    return render_template("users/docs.jinja2", form=form, **properties) #, entities=docs_sent) #, docs_sent=docs_sent) ???
-
-
-@bp.route("/test", methods=("GET", "POST"), strict_slashes=False)
-def test_():
-    """
-    Test page.
-    :return: test page.
-    """
-    print("url reachable: ok")
-    
-    return render_template("test_mfa.jinja2")
+    return render_template("users/docs.jinja2", form=form)
 
 
 @bp.route("/logout")

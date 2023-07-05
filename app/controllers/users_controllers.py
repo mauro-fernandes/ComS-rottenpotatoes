@@ -18,7 +18,7 @@ from ..webapp import db
 
 properties = {
     "entity": "user",
-    "title": "Usuários",
+    "title": "Users",
     "list_fields": ["id", "name", "username", "email", "is_student", "updated_at"],
 }
 
@@ -48,13 +48,11 @@ def index():
 
 
 class EditForm(FlaskForm):
-
-    name = StringField("Nome", validators=[InputRequired()])
-    username = StringField(u"Nome de usuário", validators=[InputRequired()])
-    is_student = BooleanField("É estudante?", default="checked")
-    #is_student = SelectField("É estudante?", choices=[('true', 'Sim'), ('false', 'Não')], coerce=bool)
+    username = StringField(u"Username", validators=[InputRequired()])
+    is_student = BooleanField("student?", )
+    #is_student = SelectField("É estudante?", choices=[(True, 'Sim'), (False, 'Não')], coerce=bool)
     
-    submit = SubmitField("enviar")
+    submit = SubmitField("Submit")
 
 
 @bp.route("/<int:id>/edit", methods=["GET"])
