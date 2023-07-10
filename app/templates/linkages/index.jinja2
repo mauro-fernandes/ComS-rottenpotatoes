@@ -30,17 +30,41 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                {% for field in list_fields %}
-                <th>{{ field }}</th>
-                {% endfor %}
-                <th>Options</th>
+                <th>ID</th>
+                    
+                    <th>ID Estudante</th>
+                    
+                    <th>ID Escola</th>
+                    
+                    <th>Ativo</th>
+                    
+                    <th>Tipo do vínculo</th>
+                    
+                    <th>Comentários</th>
+                    
+                    <th>Avaliação</th>
+                    
+                    <th>Criado em</th>
+                    
+                    <th>Atualizado em</th>
+                    
+                    <th>Opções</th>
+
             </tr>
         </thead>
         <tbody>
             {% for entity in entities %}
             <tr>
                 {% for field in list_fields %}
+                {% if field == 'active' %}
+                        {% if entity[field] == 1 %}
+                            <td>Sim</td>
+                        {% else %}
+                            <td>Não</td>
+                        {% endif %}
+                {% else %}
                 <td>{{ entity[field] }}</td>
+                {% endif%}
                 {% endfor %}
                 <td>
                     <a class="btn" href="{{ url_for('linkages.show', id=entity.id) }}" title="View"> {{

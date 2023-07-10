@@ -17,7 +17,7 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Solicitações</h1>
+                <h1>{{collection_name}}</h1>
             </div>
             <div class="col-sm-6">
                 {% if current_user.is_authenticated %}
@@ -28,24 +28,67 @@
         </div>
     </div>
 	{% if current_user.is_student==True %}
-        	Bem vindo Aluno! Envie a sua solicitação de estágio pedagógico para a escola de sua escolha!
+        	<p>
+                Bem vindo {{current_user.name}}! 
+            </p>
+            <p>
+
+            </p>Envie a sua solicitação de estágio pedagógico para a escola de sua escolha!
+            Lembre-se de conferir a aba "Escolas" para encontrar a melhor oportunidade!
+
 	{% endif %}
 	{% if current_user.is_student==False %}
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <!--
+                    The list_fields variable is defined in the controller
+                    and contains the list of fields to be displayed in the table
+                
                 {% for field in list_fields %}
                 <th>{{ field }}</th>
                 {% endfor %}
                 <th>Options</th>
+
+                -->
+                <th>id</th>
+                    
+                <th>ID Estudante</th>
+                
+                <th>ID Escola</th>
+                
+                <th>Status</th>
+                
+                <th>Título</th>
+                
+                <th>Comentários</th>
+                
+                <th>Criado em</th>
+                
+                <th>Atualizado em</th>
+                
+                <th>Opções</th>
+
+
             </tr>
         </thead>
         <tbody>
             {% for entity in entities %}
             <tr>
                 {% for field in list_fields %}
+                {% if field == 'approval' %}
+                        {% if entity[field] == 1 %}
+                            <td>APROVADO</td>
+                        {% elif entity[field] == 2 %}
+                            <td>não aceito</td>
+                        {% else %}
+                            <td>docs pendentes</td>
+                        {% endif %}
+                {% else %}
                 <td>{{ entity[field] }}</td>
+                {% endif %}
                 {% endfor %}
+                
                 <td>
                     <a class="btn" href="{{ url_for('solicitations.show', id=entity.id) }}" title="View"> {{
                         render_icon('search') }} </a>
